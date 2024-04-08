@@ -135,7 +135,6 @@ namespace TestBackend
                                     await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
 
                                     conn.Close();
-
                                 }
                                 else
                                 {
@@ -143,7 +142,8 @@ namespace TestBackend
                                     conn.Close();
                                 }
 
-                            } catch (Exception e)
+                            } 
+                            catch (Exception e)
                             {
                                 await context.Response.WriteAsync($"Error creating an account! {e.ToString()}");
                             }
