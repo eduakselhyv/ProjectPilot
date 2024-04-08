@@ -1,16 +1,15 @@
 using MySql.Data.MySqlClient;
-using Mysqlx;
 using System.Data;
 
 namespace TestBackend
 {
     public class Connection
     {
-        public static string server = "5.tcp.eu.ngrok.io"; // connection url, change when it is updated.
+        public static string server = "0.tcp.eu.ngrok.io"; // connection url, change when it is updated.
                                                            // when pushing into github, please make it blank!
                                                            // example: 2.tcp.eu.ngrok.io
 
-        public static string port = "13314"; // connection port, change when it is updated.
+        public static string port = "13843"; // connection port, change when it is updated.
                                              // when pushing into github, please make it blank as well!
                                              // example: 19672
 
@@ -50,6 +49,97 @@ namespace TestBackend
             // For example: services.AddControllers();
         }
 
+        static async Task Register(HttpContext context, IFormCollection form)
+        {
+            MySqlConnection conn = new MySqlConnection(Connection.connStr);
+
+            string username = form["username"];
+            string password = form["password"];
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand check = conn.CreateCommand();
+
+                check.CommandText = "SELECT * FROM users WHERE username = @username";
+                check.Parameters.AddWithValue("@username", username);
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(check);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                if (dt.Rows.Count != 0)
+                {
+                    context.Response.StatusCode = 409;
+                    await context.Response.WriteAsync($"Username already exists!");
+                    return;
+                }
+                MySqlCommand comm = conn.CreateCommand();
+
+                comm.CommandText = "INSERT INTO users(username,password) VALUES (@username,@password)";
+
+                comm.Parameters.AddWithValue("@username", username);
+                comm.Parameters.AddWithValue("@password", password);
+
+                comm.ExecuteNonQuery();
+
+                context.Response.StatusCode = 200;
+                await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
+            }
+            catch (Exception ex)
+            {
+                context.Response.StatusCode = 500;
+                Console.WriteLine("Register error: "+ex.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        static async Task Login(HttpContext context, IFormCollection form)
+        {
+            MySqlConnection conn = new MySqlConnection(Connection.connStr);
+
+            string username = form["username"];
+            string password = form["password"];
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand check = conn.CreateCommand();
+
+                check.CommandText = "SELECT * FROM users WHERE username = @username AND password = @password";
+                check.Parameters.AddWithValue("@username", username);
+                check.Parameters.AddWithValue("@password", password);
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(check);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                if (dt.Rows.Count == 0) // if there is no such user with username and password
+                {
+                    context.Response.StatusCode = 401;
+                    await context.Response.WriteAsync($"Incorrect information");
+                    return;
+                }
+
+                context.Response.StatusCode = 200;
+                await context.Response.WriteAsync($"Successfully logged in!");
+            }
+            catch(Exception ex)
+            {
+                context.Response.StatusCode = 500;
+                Console.WriteLine("Login error: "+ex.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -67,26 +157,15 @@ namespace TestBackend
 
                 endpoints.MapGet("/", async context =>
                 {
-                    try
+                    // Extract username from query string
+                    string requestType = context.Request.Query["requestType"];
+
+                    switch (requestType)
                     {
-                        MySqlConnection conn = new MySqlConnection(Connection.connStr);
-                        conn.Open();
-
-                        // Extract username from query string
-                        string requestType = context.Request.Query["requestType"];
-
-                        switch (requestType)
-                        {
-                            default:
-                                await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Get)");
-                                break;
-                        }
-
-                        conn.Close();
-                        
-                    }catch(Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
+                        default:
+                            context.Response.StatusCode = 400;
+                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Get)");
+                            break;
                     }
                 });
 
@@ -94,95 +173,24 @@ namespace TestBackend
 
                 endpoints.MapPost("/", async context =>
                 {
-                    try
+                    // Extract username from query string
+                    string requestType = context.Request.Query["requestType"];
+                    var form = await context.Request.ReadFormAsync();
+
+                    switch (requestType)
                     {
-                        MySqlConnection conn = new MySqlConnection(Connection.connStr);
-                        conn.Open();
+                        case "register":
+                            await Register(context, form);
+                            break;
 
-                        // Extract username from query string
-                        string requestType = context.Request.Query["requestType"];
-                        var form = await context.Request.ReadFormAsync();
+                        case "login":
+                            await Login(context, form);
+                            break;
 
-                        string username = "";
-                        string password = "";
-
-                        switch (requestType)
-                        {
-                            case "register":
-                                username = form["username"];
-                                password = form["password"];
-
-                                try
-                                {
-                                    MySqlCommand check1 = conn.CreateCommand();
-
-                                    check1.CommandText = "SELECT * FROM users WHERE username = @username";
-                                    check1.Parameters.AddWithValue("@username", username);
-
-                                    MySqlDataAdapter adapter1 = new MySqlDataAdapter(check1);
-                                    DataTable dt1 = new DataTable();
-                                    adapter1.Fill(dt1);
-
-                                    if (dt1.Rows.Count == 0)
-                                    {
-                                        MySqlCommand comm = conn.CreateCommand();
-
-                                        comm.CommandText = "INSERT INTO users(username,password) VALUES (@username,@password)";
-
-                                        comm.Parameters.AddWithValue("@username", username);
-                                        comm.Parameters.AddWithValue("@password", password);
-
-                                        comm.ExecuteNonQuery();
-
-                                        await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
-                                    }
-                                    else
-                                    {
-                                        await context.Response.WriteAsync($"Username already exists!");
-                                    }
-
-                                }
-                                catch (Exception e)
-                                {
-                                    await context.Response.WriteAsync($"Error creating an account! {e.ToString()}");
-                                }
-                                break;
-
-                            case "login":
-                                username = form["username"];
-                                password = form["password"];
-                                MySqlCommand check = conn.CreateCommand();
-
-                                check.CommandText = "SELECT * FROM users WHERE username = @username AND password = @password";
-                                check.Parameters.AddWithValue("@username", username);
-                                check.Parameters.AddWithValue("@password", password);
-
-                                MySqlDataAdapter adapter = new MySqlDataAdapter(check);
-                                DataTable dt = new DataTable();
-                                adapter.Fill(dt);
-
-                                if (dt.Rows.Count == 0)
-                                {
-                                    context.Response.StatusCode = 401;
-                                    await context.Response.WriteAsync($"Incorrect information");
-                                    return;
-                                }
-                                
-                                await context.Response.WriteAsync($"Successfully logged in!");
-                                break;
-
-                            default:
-                                context.Response.StatusCode = 400;
-                                await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
-                                break;
-                        }
-
-                        conn.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        context.Response.StatusCode = 500;
-                        Console.WriteLine(ex.ToString());
+                        default:
+                            context.Response.StatusCode = 400;
+                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
+                            break;
                     }
 
                 });
@@ -197,6 +205,7 @@ namespace TestBackend
                     switch (requestType)
                     {
                         default:
+                            context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Delete)");
                             break;
                     }
@@ -212,6 +221,7 @@ namespace TestBackend
                     switch (requestType)
                     {
                         default:
+                            context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Put)");
                             break;
                     }
