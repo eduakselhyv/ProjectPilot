@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+1KNy5GqiQfkmEwYMa8UHWIPZWd7TYxV0SnkvhBV/LCIeYs0ZwOqA520wkHT5tzHnOIudwIn9DcuPGnPnOyS+A==",
+  "dgSpecHash": "Z6tFAHdBkMzjZDk9ALb9UV8+FkiFBCn6LKQhTMXNaHd8jYE6l9zANiCVIVG8cVke1mEX/QdQCaQLO04qZoHdkA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\TIVIPT23DST\\source\\repos\\ProjectPilot\\ProjectPilotServer\\ProjectPilotServer.csproj",
+  "projectFilePath": "C:\\Users\\TIVIPT23DST\\source\\repos\\ProjectPilotServer\\ProjectPilotServer\\ProjectPilotServer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\TIVIPT23DST\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\TIVIPT23DST\\.nuget\\packages\\google.protobuf\\3.25.1\\google.protobuf.3.25.1.nupkg.sha512",

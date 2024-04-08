@@ -1,14 +1,16 @@
 using MySql.Data.MySqlClient;
+using Mysqlx;
+using System.Data;
 
 namespace TestBackend
 {
     public class Connection
     {
-        public static string server = "0.tcp.eu.ngrok.io"; // connection url, change when it is updated.
+        public static string server = "5.tcp.eu.ngrok.io"; // connection url, change when it is updated.
                                                            // when pushing into github, please make it blank!
                                                            // example: 2.tcp.eu.ngrok.io
 
-        public static string port = "19725"; // connection port, change when it is updated.
+        public static string port = "13314"; // connection port, change when it is updated.
                                              // when pushing into github, please make it blank as well!
                                              // example: 19672
 
@@ -104,7 +106,47 @@ namespace TestBackend
                         case "register":
                             username = form["username"];
                             password = form["password"];
-                            await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
+
+                            try
+                            {
+                                MySqlConnection conn = new MySqlConnection(Connection.connStr);
+                                conn.Open();
+
+                                MySqlCommand check = conn.CreateCommand();
+
+                                check.CommandText = "SELECT * FROM users WHERE username = @username";
+                                check.Parameters.AddWithValue("@username", username);
+
+                                MySqlDataAdapter adapter = new MySqlDataAdapter(check);
+                                DataTable dt = new DataTable();
+                                adapter.Fill(dt);
+
+                                if (dt.Rows.Count == 0)
+                                {
+                                    MySqlCommand comm = conn.CreateCommand();
+
+                                    comm.CommandText = "INSERT INTO users(username,password) VALUES (@username,@password)";
+
+                                    comm.Parameters.AddWithValue("@username", username);
+                                    comm.Parameters.AddWithValue("@password", password);
+
+                                    comm.ExecuteNonQuery();
+
+                                    await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
+
+                                    conn.Close();
+
+                                }
+                                else
+                                {
+                                    await context.Response.WriteAsync($"Username already exists!");
+                                    conn.Close();
+                                }
+
+                            } catch (Exception e)
+                            {
+                                await context.Response.WriteAsync($"Error creating an account! {e.ToString()}");
+                            }
                             break;
 
                         case "login":
