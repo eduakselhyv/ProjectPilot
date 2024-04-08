@@ -94,71 +94,80 @@ namespace TestBackend
 
                 endpoints.MapPost("/", async context =>
                 {
-                    // Extract username from query string
-                    string requestType = context.Request.Query["requestType"];
-                    var form = await context.Request.ReadFormAsync();
-
-                    string username = "";
-                    string password = "";
-
-                    switch (requestType)
+                    try
                     {
-                        case "register":
-                            username = form["username"];
-                            password = form["password"];
+                        // Extract username from query string
+                        string requestType = context.Request.Query["requestType"];
+                        var form = await context.Request.ReadFormAsync();
 
-                            try
-                            {
-                                MySqlConnection conn = new MySqlConnection(Connection.connStr);
-                                conn.Open();
+                        string username = "";
+                        string password = "";
 
-                                MySqlCommand check = conn.CreateCommand();
+                        switch (requestType)
+                        {
+                            case "register":
+                                username = form["username"];
+                                password = form["password"];
 
-                                check.CommandText = "SELECT * FROM users WHERE username = @username";
-                                check.Parameters.AddWithValue("@username", username);
-
-                                MySqlDataAdapter adapter = new MySqlDataAdapter(check);
-                                DataTable dt = new DataTable();
-                                adapter.Fill(dt);
-
-                                if (dt.Rows.Count == 0)
+                                try
                                 {
-                                    MySqlCommand comm = conn.CreateCommand();
+                                    MySqlConnection conn = new MySqlConnection(Connection.connStr);
+                                    conn.Open();
 
-                                    comm.CommandText = "INSERT INTO users(username,password) VALUES (@username,@password)";
+                                    MySqlCommand check = conn.CreateCommand();
 
-                                    comm.Parameters.AddWithValue("@username", username);
-                                    comm.Parameters.AddWithValue("@password", password);
+                                    check.CommandText = "SELECT * FROM users WHERE username = @username";
+                                    check.Parameters.AddWithValue("@username", username);
 
-                                    comm.ExecuteNonQuery();
+                                    MySqlDataAdapter adapter = new MySqlDataAdapter(check);
+                                    DataTable dt = new DataTable();
+                                    adapter.Fill(dt);
 
-                                    await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
+                                    if (dt.Rows.Count == 0)
+                                    {
+                                        MySqlCommand comm = conn.CreateCommand();
 
-                                    conn.Close();
+                                        comm.CommandText = "INSERT INTO users(username,password) VALUES (@username,@password)";
+
+                                        comm.Parameters.AddWithValue("@username", username);
+                                        comm.Parameters.AddWithValue("@password", password);
+
+                                        comm.ExecuteNonQuery();
+
+                                        await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
+
+                                        conn.Close();
+                                    }
+                                    else
+                                    {
+                                        await context.Response.WriteAsync($"Username already exists!");
+                                        conn.Close();
+                                    }
+
                                 }
-                                else
+                                catch (Exception e)
                                 {
-                                    await context.Response.WriteAsync($"Username already exists!");
-                                    conn.Close();
+                                    await context.Response.WriteAsync($"Error creating an account! {e.ToString()}");
                                 }
+                                break;
 
-                            } 
-                            catch (Exception e)
-                            {
-                                await context.Response.WriteAsync($"Error creating an account! {e.ToString()}");
-                            }
-                            break;
+                            case "login":
+                                username = form["username"];
+                                password = form["password"];
+                                await context.Response.WriteAsync($"Successfully logged in!");
+                                break;
 
-                        case "login":
-                            username = form["username"];
-                            password = form["password"];
-                            await context.Response.WriteAsync($"Successfully logged in!");
-                            break;
-
-                        default:
-                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
-                            break;
+                            default:
+                                await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
+                                break;
+                        }
                     }
+                    catch (Exception ex)
+                    {
+                        context.Response.StatusCode = 500;
+                        Console.WriteLine(ex.ToString());
+                    }
+                    
                 });
 
                 // DELETE REQUESTS //
