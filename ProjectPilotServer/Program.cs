@@ -1,5 +1,29 @@
+using MySql.Data.MySqlClient;
+
 namespace TestBackend
 {
+    public class Connection
+    {
+        public static string server = "0.tcp.eu.ngrok.io"; // connection url, change when it is updated.
+                                                           // when pushing into github, please make it blank!
+                                                           // example: 2.tcp.eu.ngrok.io
+
+        public static string port = "19725"; // connection port, change when it is updated.
+                                             // when pushing into github, please make it blank as well!
+                                             // example: 19672
+
+        public static string database = "project_pilot";
+        public static string user = "root";
+        public static string password = "admin";
+
+        public static string connStr =
+            "server=" + server + ";" +
+            "port=" + port + ";" +
+            "database=" + database + ";" +
+            "uid=" + user + ";" +
+            "password=" + password + ";";
+    }
+
     public class Program
     {
         public static void Main(string[] args)
@@ -41,14 +65,25 @@ namespace TestBackend
 
                 endpoints.MapGet("/", async context =>
                 {
-                    // Extract username from query string
-                    string requesttype = context.Request.Query["requesttype"];
-
-                    switch (requesttype)
+                    try
                     {
-                        default:
-                            await context.Response.WriteAsync($"{requesttype} is not a recognized request type. (Get)");
-                            break;
+                        MySqlConnection conn = new MySqlConnection(Connection.connStr);
+                        conn.Open();
+
+                        // Extract username from query string
+                        string requestType = context.Request.Query["requestType"];
+
+                        switch (requestType)
+                        {
+                            default:
+                                await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Get)");
+                                break;
+                        }
+
+                        conn.Close();
+                    }catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
                     }
                 });
 
@@ -57,12 +92,12 @@ namespace TestBackend
                 endpoints.MapPost("/", async context =>
                 {
                     // Extract username from query string
-                    string requesttype = context.Request.Query["requesttype"];
+                    string requestType = context.Request.Query["requestType"];
 
-                    switch (requesttype)
+                    switch (requestType)
                     {
                         default:
-                            await context.Response.WriteAsync($"{requesttype} is not a recognized request type. (Post)");
+                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
                             break;
                     }
                 });
@@ -72,12 +107,12 @@ namespace TestBackend
                 endpoints.MapDelete("/", async context =>
                 {
                     // Extract username from query string
-                    string requesttype = context.Request.Query["requesttype"];
+                    string requestType = context.Request.Query["requestType"];
 
-                    switch (requesttype)
+                    switch (requestType)
                     {
                         default:
-                            await context.Response.WriteAsync($"{requesttype} is not a recognized request type. (Delete)");
+                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Delete)");
                             break;
                     }
                 });
@@ -87,12 +122,12 @@ namespace TestBackend
                 endpoints.MapPut("/", async context =>
                 {
                     // Extract username from query string
-                    string requesttype = context.Request.Query["requesttype"];
+                    string requestType = context.Request.Query["requestType"];
 
-                    switch (requesttype)
+                    switch (requestType)
                     {
                         default:
-                            await context.Response.WriteAsync($"{requesttype} is not a recognized request type. (Put)");
+                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Put)");
                             break;
                     }
                 });
