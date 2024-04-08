@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace TestBackend
 {
     public class Program
@@ -36,14 +38,80 @@ namespace TestBackend
 
             app.UseEndpoints(endpoints =>
             {
+
+                // GET REQUESTS //
+
                 endpoints.MapGet("/", async context =>
                 {
                     // Extract username from query string
-                    string requesttype = context.Request.Query["requesttype"];
-    
-                    switch(requesttype)
-                    {
+                    string requestType = context.Request.Query["requestType"];
 
+                    switch (requestType)
+                    {
+                        default:
+                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Get)");
+                            break;
+                    }
+                });
+
+                // POST REQUESTS //
+
+                endpoints.MapPost("/", async context =>
+                {
+                    // Extract username from query string
+                    string requestType = context.Request.Query["requestType"];
+                    var form = await context.Request.ReadFormAsync();
+
+                    string username = "";
+                    string password = "";
+
+                    switch (requestType)
+                    {
+                        case "register":
+                            username = form["username"];
+                            password = form["password"];
+                            await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
+                            break;
+
+                        case "login":
+                            username = form["username"];
+                            password = form["password"];
+                            await context.Response.WriteAsync($"Successfully logged in!");
+                            break;
+
+                        default:
+                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
+                            break;
+                    }
+                });
+
+                // DELETE REQUESTS //
+
+                endpoints.MapDelete("/", async context =>
+                {
+                    // Extract username from query string
+                    string requestType = context.Request.Query["requestType"];
+
+                    switch (requestType)
+                    {
+                        default:
+                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Delete)");
+                            break;
+                    }
+                });
+
+                // PUT REQUESTS //
+
+                endpoints.MapPut("/", async context =>
+                {
+                    // Extract username from query string
+                    string requestType = context.Request.Query["requestType"];
+
+                    switch (requestType)
+                    {
+                        default:
+                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Put)");
+                            break;
                     }
                 });
             });
