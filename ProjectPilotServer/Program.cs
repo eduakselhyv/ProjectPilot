@@ -36,14 +36,64 @@ namespace TestBackend
 
             app.UseEndpoints(endpoints =>
             {
+
+                // GET REQUESTS //
+
                 endpoints.MapGet("/", async context =>
                 {
                     // Extract username from query string
                     string requesttype = context.Request.Query["requesttype"];
-    
-                    switch(requesttype)
-                    {
 
+                    switch (requesttype)
+                    {
+                        default:
+                            await context.Response.WriteAsync($"{requesttype} is not a recognized request type. (Get)");
+                            break;
+                    }
+                });
+
+                // POST REQUESTS //
+
+                endpoints.MapPost("/", async context =>
+                {
+                    // Extract username from query string
+                    string requesttype = context.Request.Query["requesttype"];
+
+                    switch (requesttype)
+                    {
+                        default:
+                            await context.Response.WriteAsync($"{requesttype} is not a recognized request type. (Post)");
+                            break;
+                    }
+                });
+
+                // DELETE REQUESTS //
+
+                endpoints.MapDelete("/", async context =>
+                {
+                    // Extract username from query string
+                    string requesttype = context.Request.Query["requesttype"];
+
+                    switch (requesttype)
+                    {
+                        default:
+                            await context.Response.WriteAsync($"{requesttype} is not a recognized request type. (Delete)");
+                            break;
+                    }
+                });
+
+                // PUT REQUESTS //
+
+                endpoints.MapPut("/", async context =>
+                {
+                    // Extract username from query string
+                    string requesttype = context.Request.Query["requesttype"];
+
+                    switch (requesttype)
+                    {
+                        default:
+                            await context.Response.WriteAsync($"{requesttype} is not a recognized request type. (Put)");
+                            break;
                     }
                 });
             });

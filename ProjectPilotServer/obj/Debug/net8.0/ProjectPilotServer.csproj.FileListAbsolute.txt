@@ -23,3 +23,4 @@ C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\ProjectPilotServer\obj\Debu
 C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\ProjectPilotServer\obj\Debug\net8.0\ProjectPilotServer.pdb
 C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\ProjectPilotServer\obj\Debug\net8.0\ProjectPilotServer.genruntimeconfig.cache
 C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\ProjectPilotServer\obj\Debug\net8.0\ref\ProjectPilotServer.dll
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\ProjectPilotServer\obj\Debug\net8.0\ProjectPilotServer.sourcelink.json
