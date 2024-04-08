@@ -81,6 +81,7 @@ namespace TestBackend
                         }
 
                         conn.Close();
+                        
                     }catch(Exception ex)
                     {
                         Console.WriteLine(ex.ToString());
@@ -93,9 +94,25 @@ namespace TestBackend
                 {
                     // Extract username from query string
                     string requestType = context.Request.Query["requestType"];
+                    var form = await context.Request.ReadFormAsync();
+
+                    string username = "";
+                    string password = "";
 
                     switch (requestType)
                     {
+                        case "register":
+                            username = form["username"];
+                            password = form["password"];
+                            await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
+                            break;
+
+                        case "login":
+                            username = form["username"];
+                            password = form["password"];
+                            await context.Response.WriteAsync($"Successfully logged in!");
+                            break;
+
                         default:
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
                             break;
