@@ -6,11 +6,11 @@ namespace TestBackend
 {
     public class Connection
     {
-        public static string server = "0.tcp.eu.ngrok.io"; // connection url, change when it is updated.
+        public static string server = "5.tcp.eu.ngrok.io"; // connection url, change when it is updated.
                                                            // when pushing into github, please make it blank!
                                                            // example: 2.tcp.eu.ngrok.io
 
-        public static string port = "0000"; // connection port, change when it is updated.
+        public static string port = "13314"; // connection port, change when it is updated.
                                              // when pushing into github, please make it blank as well!
                                              // example: 19672
 
@@ -114,16 +114,16 @@ namespace TestBackend
 
                                 try
                                 {
-                                    MySqlCommand check = conn.CreateCommand();
+                                    MySqlCommand check1 = conn.CreateCommand();
 
-                                    check.CommandText = "SELECT * FROM users WHERE username = @username";
-                                    check.Parameters.AddWithValue("@username", username);
+                                    check1.CommandText = "SELECT * FROM users WHERE username = @username";
+                                    check1.Parameters.AddWithValue("@username", username);
 
-                                    MySqlDataAdapter adapter = new MySqlDataAdapter(check);
-                                    DataTable dt = new DataTable();
-                                    adapter.Fill(dt);
+                                    MySqlDataAdapter adapter1 = new MySqlDataAdapter(check1);
+                                    DataTable dt1 = new DataTable();
+                                    adapter1.Fill(dt1);
 
-                                    if (dt.Rows.Count == 0)
+                                    if (dt1.Rows.Count == 0)
                                     {
                                         MySqlCommand comm = conn.CreateCommand();
 
