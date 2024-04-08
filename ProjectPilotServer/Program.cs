@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace TestBackend
 {
@@ -8,7 +9,7 @@ namespace TestBackend
                                                            // when pushing into github, please make it blank!
                                                            // example: 2.tcp.eu.ngrok.io
 
-        public static string port = "19725"; // connection port, change when it is updated.
+        public static string port = "00000"; // connection port, change when it is updated.
                                              // when pushing into github, please make it blank as well!
                                              // example: 19672
 
@@ -92,30 +93,62 @@ namespace TestBackend
 
                 endpoints.MapPost("/", async context =>
                 {
-                    // Extract username from query string
-                    string requestType = context.Request.Query["requestType"];
-                    var form = await context.Request.ReadFormAsync();
-
-                    string username = "";
-                    string password = "";
-
-                    switch (requestType)
+                    try
                     {
-                        case "register":
-                            username = form["username"];
-                            password = form["password"];
-                            await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
-                            break;
+                        MySqlConnection conn = new MySqlConnection(Connection.connStr);
+                        conn.Open();
 
-                        case "login":
-                            username = form["username"];
-                            password = form["password"];
-                            await context.Response.WriteAsync($"Successfully logged in!");
-                            break;
+                        // Extract username from query string
+                        string requestType = context.Request.Query["requestType"];
+                        var form = await context.Request.ReadFormAsync();
 
-                        default:
-                            await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
-                            break;
+                        string username = "";
+                        string password = "";
+
+                        switch (requestType)
+                        {
+                            case "register":
+                                username = form["username"];
+                                password = form["password"];
+                                await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
+                                break;
+
+                            case "login":
+                                username = form["username"];
+                                password = form["password"];
+                                MySqlCommand check = conn.CreateCommand();
+
+                                check.CommandText = "SELECT * FROM users WHERE username = @username AND password = @password";
+                                check.Parameters.AddWithValue("@username", username);
+                                check.Parameters.AddWithValue("@password", password);
+
+                                MySqlDataAdapter adapter = new MySqlDataAdapter(check);
+                                DataTable dt = new DataTable();
+                                adapter.Fill(dt);
+
+                                if (dt.Rows.Count == 0)
+                                {
+                                    context.Response.StatusCode = 401;
+                                    await context.Response.WriteAsync($"Incorrect information");
+                                    return;
+                                }
+                                
+                                await context.Response.WriteAsync($"Successfully logged in!");
+                                break;
+
+                            default:
+                                context.Response.StatusCode = 400;
+                                await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
+                                break;
+                        }
+
+                        conn.Close();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        context.Response.StatusCode = 500;
+                        Console.WriteLine(ex.ToString());
                     }
                 });
 
