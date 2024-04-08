@@ -96,6 +96,9 @@ namespace TestBackend
                 {
                     try
                     {
+                        MySqlConnection conn = new MySqlConnection(Connection.connStr);
+                        conn.Open();
+
                         // Extract username from query string
                         string requestType = context.Request.Query["requestType"];
                         var form = await context.Request.ReadFormAsync();
@@ -111,9 +114,6 @@ namespace TestBackend
 
                                 try
                                 {
-                                    MySqlConnection conn = new MySqlConnection(Connection.connStr);
-                                    conn.Open();
-
                                     MySqlCommand check = conn.CreateCommand();
 
                                     check.CommandText = "SELECT * FROM users WHERE username = @username";
@@ -135,13 +135,10 @@ namespace TestBackend
                                         comm.ExecuteNonQuery();
 
                                         await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
-
-                                        conn.Close();
                                     }
                                     else
                                     {
                                         await context.Response.WriteAsync($"Username already exists!");
-                                        conn.Close();
                                     }
 
                                 }
@@ -154,20 +151,40 @@ namespace TestBackend
                             case "login":
                                 username = form["username"];
                                 password = form["password"];
+                                MySqlCommand check = conn.CreateCommand();
+
+                                check.CommandText = "SELECT * FROM users WHERE username = @username AND password = @password";
+                                check.Parameters.AddWithValue("@username", username);
+                                check.Parameters.AddWithValue("@password", password);
+
+                                MySqlDataAdapter adapter = new MySqlDataAdapter(check);
+                                DataTable dt = new DataTable();
+                                adapter.Fill(dt);
+
+                                if (dt.Rows.Count == 0)
+                                {
+                                    context.Response.StatusCode = 401;
+                                    await context.Response.WriteAsync($"Incorrect information");
+                                    return;
+                                }
+                                
                                 await context.Response.WriteAsync($"Successfully logged in!");
                                 break;
 
                             default:
+                                context.Response.StatusCode = 400;
                                 await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
                                 break;
                         }
+
+                        conn.Close();
                     }
                     catch (Exception ex)
                     {
                         context.Response.StatusCode = 500;
                         Console.WriteLine(ex.ToString());
                     }
-                    
+
                 });
 
                 // DELETE REQUESTS //
