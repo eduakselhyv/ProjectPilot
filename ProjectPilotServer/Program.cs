@@ -1,30 +1,5 @@
-using MySql.Data.MySqlClient;
-using System.Data;
-
-namespace TestBackend
+namespace ProjectPilotServer
 {
-    public class Connection
-    {
-        public static string server = "0.tcp.eu.ngrok.io"; // connection url, change when it is updated.
-                                                           // when pushing into github, please make it blank!
-                                                           // example: 2.tcp.eu.ngrok.io
-
-        public static string port = "00000"; // connection port, change when it is updated.
-                                             // when pushing into github, please make it blank as well!
-                                             // example: 19672
-
-        public static string database = "project_pilot";
-        public static string user = "root";
-        public static string password = "admin";
-
-        public static string connStr =
-            "server=" + server + ";" +
-            "port=" + port + ";" +
-            "database=" + database + ";" +
-            "uid=" + user + ";" +
-            "password=" + password + ";";
-    }
-
     public class Program
     {
         public static void Main(string[] args)
@@ -47,97 +22,6 @@ namespace TestBackend
         {
             // Configure any services your application requires
             // For example: services.AddControllers();
-        }
-
-        static async Task Register(HttpContext context, IFormCollection form)
-        {
-            MySqlConnection conn = new MySqlConnection(Connection.connStr);
-
-            string username = form["username"];
-            string password = form["password"];
-
-            try
-            {
-                conn.Open();
-
-                MySqlCommand check = conn.CreateCommand();
-
-                check.CommandText = "SELECT * FROM users WHERE username = @username";
-                check.Parameters.AddWithValue("@username", username);
-
-                MySqlDataAdapter adapter = new MySqlDataAdapter(check);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-
-                if (dt.Rows.Count != 0)
-                {
-                    context.Response.StatusCode = 409;
-                    await context.Response.WriteAsync($"Username already exists!");
-                    return;
-                }
-                MySqlCommand comm = conn.CreateCommand();
-
-                comm.CommandText = "INSERT INTO users(username,password) VALUES (@username,@password)";
-
-                comm.Parameters.AddWithValue("@username", username);
-                comm.Parameters.AddWithValue("@password", password);
-
-                comm.ExecuteNonQuery();
-
-                context.Response.StatusCode = 200;
-                await context.Response.WriteAsync($"Successfully created an account! \nusername: {username} \npassword: {password}");
-            }
-            catch (Exception ex)
-            {
-                context.Response.StatusCode = 500;
-                Console.WriteLine("Register error: "+ex.ToString());
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-        static async Task Login(HttpContext context, IFormCollection form)
-        {
-            MySqlConnection conn = new MySqlConnection(Connection.connStr);
-
-            string username = form["username"];
-            string password = form["password"];
-
-            try
-            {
-                conn.Open();
-
-                MySqlCommand check = conn.CreateCommand();
-
-                check.CommandText = "SELECT * FROM users WHERE username = @username AND password = @password";
-                check.Parameters.AddWithValue("@username", username);
-                check.Parameters.AddWithValue("@password", password);
-
-                MySqlDataAdapter adapter = new MySqlDataAdapter(check);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-
-                if (dt.Rows.Count == 0) // if there is no such user with username and password
-                {
-                    context.Response.StatusCode = 401;
-                    await context.Response.WriteAsync($"Incorrect information");
-                    return;
-                }
-
-                context.Response.StatusCode = 200;
-                await context.Response.WriteAsync($"Successfully logged in!");
-            }
-            catch(Exception ex)
-            {
-                context.Response.StatusCode = 500;
-                Console.WriteLine("Login error: "+ex.ToString());
-            }
-            finally
-            {
-                conn.Close();
-            }
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -180,11 +64,11 @@ namespace TestBackend
                     switch (requestType)
                     {
                         case "register":
-                            await Register(context, form);
+                            await Auth.Register(context, form);
                             break;
 
                         case "login":
-                            await Login(context, form);
+                            await Auth.Login(context, form);
                             break;
 
                         default:
