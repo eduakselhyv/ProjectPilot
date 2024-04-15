@@ -70,10 +70,9 @@ namespace ProjectPilotServer
                 check.CommandText = "SELECT * FROM users WHERE username = @username AND password = @password";
                 check.Parameters.AddWithValue("@username", username);
                 check.Parameters.AddWithValue("@password", password);
-
+                
                 MySqlDataAdapter adapter = new MySqlDataAdapter(check);
                 DataTable dt = new DataTable();
-                adapter.Fill(dt);
 
                 if (dt.Rows.Count == 0) // if there is no such user with username and password
                 {

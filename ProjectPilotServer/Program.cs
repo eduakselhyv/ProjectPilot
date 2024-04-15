@@ -46,6 +46,12 @@ namespace ProjectPilotServer
 
                     switch (requestType)
                     {
+                        case "projects":
+                            await Projects.GetProjects(context);
+                            break;
+                        case "users":
+                            await Users.GetUsers(context);
+                            break;
                         default:
                             context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Get)");
@@ -69,6 +75,10 @@ namespace ProjectPilotServer
 
                         case "login":
                             await Auth.Login(context, form);
+                            break;
+
+                        case "project":
+                            await Projects.ControlProject(context, form); // both for creating and editing a project
                             break;
 
                         default:
