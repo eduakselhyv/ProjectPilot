@@ -28,7 +28,7 @@ namespace ProjectPilotServer
             catch (Exception ex)
             {
                 context.Response.StatusCode = 500;
-                Console.WriteLine("Register error: " + ex.ToString());
+                Console.WriteLine("Get projects error: " + ex.ToString());
             }
             finally
             {
@@ -89,7 +89,7 @@ namespace ProjectPilotServer
             catch (Exception ex)
             {
                 context.Response.StatusCode = 500;
-                Console.WriteLine("Register error: " + ex.ToString());
+                Console.WriteLine("Control project error: " + ex.ToString());
             }
             finally
             {
