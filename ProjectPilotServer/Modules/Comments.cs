@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using MySql.Data.MySqlClient;
 using Mysqlx.Crud;
 using Newtonsoft.Json;
 using System.Data;
@@ -132,6 +133,72 @@ namespace ProjectPilotServer
             {
                 context.Response.StatusCode = 500;
                 Console.WriteLine("Error posting comment: " + ex.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static async Task EditComment(HttpContext context, IFormCollection form)
+        {
+            MySqlConnection conn = new MySqlConnection(Connection.connStr);
+
+            string id = form["id"];
+            string value = form["value"];
+            DateTime edited = DateTime.Now;
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand comm = conn.CreateCommand();
+
+                comm.CommandText = "UPDATE comments SET value=@value,edited=@edited WHERE id=@id";
+
+                comm.Parameters.AddWithValue("@id", id);
+                comm.Parameters.AddWithValue("@value", value);
+                comm.Parameters.AddWithValue("@edited", edited);
+
+                comm.ExecuteNonQuery();
+
+                await context.Response.WriteAsync("Success!");
+            }
+            catch (Exception ex)
+            {
+                context.Response.StatusCode = 500;
+                Console.WriteLine("Error editing a comment: " + ex.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static async Task DeleteComment(HttpContext context)
+        {
+            MySqlConnection conn = new MySqlConnection(Connection.connStr);
+
+            string id = context.Request.Query["id"];
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand comm = conn.CreateCommand();
+
+                comm.CommandText = "UPDATE comments SET deleted=1 WHERE id=@id OR comment_id=@id";
+
+                comm.Parameters.AddWithValue("@id", id);
+
+                comm.ExecuteNonQuery();
+
+                await context.Response.WriteAsync("Success!");
+            }
+            catch (Exception ex)
+            {
+                context.Response.StatusCode = 500;
+                Console.WriteLine("Error deleting a comment: " + ex.ToString());
             }
             finally
             {

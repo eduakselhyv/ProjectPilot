@@ -105,6 +105,9 @@ namespace ProjectPilotServer
 
                     switch (requestType)
                     {
+                        case "comment":
+                            await Comments.DeleteComment(context);
+                            break;
                         default:
                             context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Delete)");
@@ -118,9 +121,13 @@ namespace ProjectPilotServer
                 {
                     // Extract username from query string
                     string requestType = context.Request.Query["requestType"];
+                    var form = await context.Request.ReadFormAsync();
 
                     switch (requestType)
                     {
+                        case "comment":
+                            await Comments.EditComment(context, form);
+                            break;
                         default:
                             context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Put)");
