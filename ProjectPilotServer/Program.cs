@@ -52,6 +52,9 @@ namespace ProjectPilotServer
                         case "users":
                             await Users.GetUsers(context);
                             break;
+                        case "comment":
+                            await Comments.GetComments(context); // For getting comments
+                            break;
                         default:
                             context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Get)");
@@ -79,6 +82,10 @@ namespace ProjectPilotServer
 
                         case "project":
                             await Projects.ControlProject(context, form); // both for creating and editing a project
+                            break;
+
+                        case "comment":
+                            await Comments.PostComment(context, form);
                             break;
 
                         default:
