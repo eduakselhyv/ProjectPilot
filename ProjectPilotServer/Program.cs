@@ -52,7 +52,7 @@ namespace ProjectPilotServer
                         case "users":
                             await Users.GetUsers(context);
                             break;
-                        case "comment":
+                        case "comments":
                             await Comments.GetComments(context); // For getting comments
                             break;
                         default:
@@ -86,6 +86,10 @@ namespace ProjectPilotServer
 
                         case "comment":
                             await Comments.PostComment(context, form);
+                            break;
+
+                        case "requirement":
+                            await Requirements.PostRequirement(context, form);
                             break;
 
                         default:
