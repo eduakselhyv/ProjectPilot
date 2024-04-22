@@ -132,6 +132,9 @@ namespace ProjectPilotServer
                         case "comment":
                             await Comments.EditComment(context, form);
                             break;
+                        case "requirement":
+                            await Requirements.EditRequirement(context, form);
+                            break;
                         default:
                             context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Put)");

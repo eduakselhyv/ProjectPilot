@@ -106,6 +106,7 @@ namespace ProjectPilotServer
 
                     comm.ExecuteNonQuery();
 
+                    context.Response.StatusCode = 200;
                     await context.Response.WriteAsync("Success!");
                 }
                 else if (type == "reply")
@@ -121,6 +122,7 @@ namespace ProjectPilotServer
 
                     comm.ExecuteNonQuery();
 
+                    context.Response.StatusCode = 200;
                     await context.Response.WriteAsync("Success!");
                 }
                 else if (type == "requirement")
@@ -162,6 +164,7 @@ namespace ProjectPilotServer
 
                 comm.ExecuteNonQuery();
 
+                context.Response.StatusCode = 200;
                 await context.Response.WriteAsync("Success!");
             }
             catch (Exception ex)
@@ -193,6 +196,7 @@ namespace ProjectPilotServer
 
                 comm.ExecuteNonQuery();
 
+                context.Response.StatusCode = 200;
                 await context.Response.WriteAsync("Success!");
             }
             catch (Exception ex)
