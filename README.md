@@ -18,3 +18,6 @@ Tähän mennessä olen keskittynyt pääasiassa backendin kehitykseen ja käytt�
 Tässä on esikatselu suunnittelemastani käyttöliittymästä:
 
 ![image](https://github.com/eduakselhyv/ProjectPilot/assets/142724134/7d455857-9df5-4706-a0b5-687d15eb1fcb)
+
+
+Akseli Hyvönen
