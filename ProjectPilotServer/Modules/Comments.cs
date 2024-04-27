@@ -8,6 +8,7 @@ namespace ProjectPilotServer
 {
     public class Comments
     {
+        // Get comments from either projects, other comments (replies, essentially), or requirements
         public static async Task GetComments(HttpContext context)
         {
             MySqlConnection conn = new MySqlConnection(Connection.connStr);
@@ -27,9 +28,9 @@ namespace ProjectPilotServer
                 if (type == "project")
                 {
                     comm.CommandText =
-                        "SELECT u.username, c.value, c.edited, c.created " +
-                        "FROM comments c " +
-                        "JOIN users u ON c.user_id = u.id " +
+                        "SELECT u.username, c.value, c.edited, c.created " +    // Returning username from users table, and value, edited and created from comments table
+                        "FROM comments c " +                                    // I am basically joining rows from different tables together, based on primary and foreign keys.
+                        "JOIN users u ON c.user_id = u.id " +                   // If this makes no sense, I am sorry. There are great tutorials out there tho for this stuff.
                         "WHERE project_id = @project_id";
                     comm.Parameters.AddWithValue("@project_id", project_id);
 
@@ -59,7 +60,7 @@ namespace ProjectPilotServer
                 else if (type == "requirement")
                 {
                     comm.CommandText =
-                        "SELECT u.username, c.value, c.edited, c.created " +
+                        "SELECT u.username, c.value, c.edited, c.created " +    // Same thing as earlier, but with more joins this time.
                         "FROM comments c " +
                         "JOIN requirement_comment_relations rcr ON c.id = rcr.comment_id " +
                         "JOIN users u ON c.user_id = u.id " +
@@ -87,6 +88,7 @@ namespace ProjectPilotServer
             }
         }
     
+        // Adding a new comment
         public static async Task PostComment(HttpContext context, IFormCollection form)
         {
             MySqlConnection conn = new MySqlConnection(Connection.connStr);
@@ -141,6 +143,7 @@ namespace ProjectPilotServer
                 }
                 else if (type == "requirement")
                 {
+                    // I am inserting a new comment, and then immediately getting that insert's ID afterwards.
                     comm.CommandText = "INSERT INTO comments(created,user_id,type,value,deleted) VALUES (@created,@user_id,@type,@value,@deleted); SELECT LAST_INSERT_ID();";
 
                     comm.Parameters.AddWithValue("@created", created);
@@ -151,10 +154,9 @@ namespace ProjectPilotServer
 
                     var id = comm.ExecuteScalar();
 
-                    // Convert the retrieved ID to the appropriate data type
-                    int newCommentId = Convert.ToInt32(id);
+                    int newCommentId = Convert.ToInt32(id); // Converting the ID to a integer
 
-                    MySqlCommand comm2 = conn.CreateCommand();
+                    MySqlCommand comm2 = conn.CreateCommand(); // Creating a new command for the purpose of adding this new ID to another table
 
                     comm2.CommandText = "INSERT INTO requirement_comment_relations(comment_id, requirement_id) VALUES (@comment_id, @requirement_id)";
                     comm2.Parameters.AddWithValue("@comment_id", newCommentId);
@@ -178,6 +180,7 @@ namespace ProjectPilotServer
             }
         }
 
+        // Editing an existing comment
         public static async Task EditComment(HttpContext context, IFormCollection form)
         {
             MySqlConnection conn = new MySqlConnection(Connection.connStr);
@@ -214,6 +217,7 @@ namespace ProjectPilotServer
             }
         }
 
+        // Deleting a comment (Not literally deleting, but making it invisible. This is to that there is a comment history left behind.)
         public static async Task DeleteComment(HttpContext context)
         {
             MySqlConnection conn = new MySqlConnection(Connection.connStr);

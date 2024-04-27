@@ -55,6 +55,12 @@ namespace ProjectPilotServer
                         case "comments":
                             await Comments.GetComments(context); // For getting comments
                             break;
+                        case "requirements":
+                            await Requirements.GetRequirements(context); // For getting requirements
+                            break;
+                        case "relations":
+                            await Relations.GetRelations(context); // For getting relations
+                            break;
                         default:
                             context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Get)");
