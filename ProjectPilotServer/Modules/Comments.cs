@@ -26,7 +26,11 @@ namespace ProjectPilotServer
 
                 if (type == "project")
                 {
-                    comm.CommandText = "SELECT value, user_id FROM comments WHERE project_id = @project_id";
+                    comm.CommandText =
+                        "SELECT u.username, c.value, c.edited, c.created " +
+                        "FROM comments c " +
+                        "JOIN users u ON c.user_id = u.id " +
+                        "WHERE project_id = @project_id";
                     comm.Parameters.AddWithValue("@project_id", project_id);
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(comm);
@@ -38,7 +42,11 @@ namespace ProjectPilotServer
                 }
                 else if (type == "reply")
                 {
-                    comm.CommandText = "SELECT value, user_id FROM comments WHERE comment_id = @comment_id";
+                    comm.CommandText =
+                        "SELECT u.username, c.value, c.edited, c.created " +
+                        "FROM comments c " +
+                        "JOIN users u ON c.user_id = u.id " +
+                        "WHERE comment_id = @comment_id";
                     comm.Parameters.AddWithValue("@comment_id", comment_id);
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(comm);
@@ -50,7 +58,13 @@ namespace ProjectPilotServer
                 }
                 else if (type == "requirement")
                 {
-                    comm.CommandText = "SELECT comment_id FROM requirement_relations WHERE requirement_id = @requirement_id";
+                    comm.CommandText =
+                        "SELECT u.username, c.value, c.edited, c.created " +
+                        "FROM comments c " +
+                        "JOIN requirement_comment_relations rcr ON c.id = rcr.comment_id " +
+                        "JOIN users u ON c.user_id = u.id " +
+                        "WHERE rcr.requirement_id = @requirement_id";
+
                     comm.Parameters.AddWithValue("@requirement_id", requirement_id);
 
                     MySqlDataAdapter adapter = new MySqlDataAdapter(comm);
