@@ -82,8 +82,8 @@ namespace ProjectPilotServer
             string value = form["value"];
             string project_id = form["project_id"];
             string comment_id = form["comment_id"];
+            string requirement_id = form["requirement_id"];
             string user_id = form["user_id"];
-            bool deleted = Convert.ToBoolean(form["deleted"]);
             DateTime created = DateTime.Now;
 
             try
@@ -102,7 +102,7 @@ namespace ProjectPilotServer
                     comm.Parameters.AddWithValue("@user_id", user_id);
                     comm.Parameters.AddWithValue("@type", type);
                     comm.Parameters.AddWithValue("@value", value);
-                    comm.Parameters.AddWithValue("@deleted", deleted);
+                    comm.Parameters.AddWithValue("@deleted", 0);
 
                     comm.ExecuteNonQuery();
 
@@ -118,7 +118,7 @@ namespace ProjectPilotServer
                     comm.Parameters.AddWithValue("@user_id", user_id);
                     comm.Parameters.AddWithValue("@type", type);
                     comm.Parameters.AddWithValue("@value", value);
-                    comm.Parameters.AddWithValue("@deleted", deleted);
+                    comm.Parameters.AddWithValue("@deleted", 0);
 
                     comm.ExecuteNonQuery();
 
@@ -127,6 +127,28 @@ namespace ProjectPilotServer
                 }
                 else if (type == "requirement")
                 {
+                    comm.CommandText = "INSERT INTO comments(created,user_id,type,value,deleted) VALUES (@created,@user_id,@type,@value,@deleted); SELECT LAST_INSERT_ID();";
+
+                    comm.Parameters.AddWithValue("@created", created);
+                    comm.Parameters.AddWithValue("@user_id", user_id);
+                    comm.Parameters.AddWithValue("@type", type);
+                    comm.Parameters.AddWithValue("@value", value);
+                    comm.Parameters.AddWithValue("@deleted", 0);
+
+                    var id = comm.ExecuteScalar();
+
+                    // Convert the retrieved ID to the appropriate data type
+                    int newCommentId = Convert.ToInt32(id);
+
+                    MySqlCommand comm2 = conn.CreateCommand();
+
+                    comm2.CommandText = "INSERT INTO requirement_comment_relations(comment_id, requirement_id) VALUES (@comment_id, @requirement_id)";
+                    comm2.Parameters.AddWithValue("@comment_id", newCommentId);
+                    comm2.Parameters.AddWithValue("@requirement_id", requirement_id);
+                    comm2.ExecuteNonQuery();
+
+                    context.Response.StatusCode = 200;
+                    await context.Response.WriteAsync("Success!");
 
                 }
 

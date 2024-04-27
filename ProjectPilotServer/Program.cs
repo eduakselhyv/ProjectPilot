@@ -92,6 +92,10 @@ namespace ProjectPilotServer
                             await Requirements.PostRequirement(context, form);
                             break;
 
+                        case "relation":
+                            await Relations.AddRelation(context, form);
+                            break;
+
                         default:
                             context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Post)");
@@ -106,12 +110,18 @@ namespace ProjectPilotServer
                 {
                     // Extract username from query string
                     string requestType = context.Request.Query["requestType"];
+                    var form = await context.Request.ReadFormAsync();
 
                     switch (requestType)
                     {
                         case "comment":
                             await Comments.DeleteComment(context);
                             break;
+
+                        case "relation":
+                            await Relations.DeleteRelation(context, form);
+                            break;
+
                         default:
                             context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Delete)");
