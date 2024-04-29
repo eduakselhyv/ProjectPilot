@@ -49,6 +49,9 @@ namespace ProjectPilotServer
                         case "projects":
                             await Projects.GetProjects(context);
                             break;
+                        case "roles":
+                            await Roles.GetRoles(context);
+                            break;
                         case "users":
                             await Users.GetUsers(context);
                             break;
@@ -101,6 +104,10 @@ namespace ProjectPilotServer
                         case "relation":
                             await Relations.AddRelation(context, form);
                             break;
+                            
+                        case "role":
+                            await Roles.ControlRole(context, form); // both for creating and editing a project
+                            break;
 
                         default:
                             context.Response.StatusCode = 400;
@@ -128,6 +135,10 @@ namespace ProjectPilotServer
                             await Relations.DeleteRelation(context, form);
                             break;
 
+                        case "role":
+                            await Roles.DeleteRole(context);
+                            break;
+                            
                         default:
                             context.Response.StatusCode = 400;
                             await context.Response.WriteAsync($"{requestType} is not a recognized request type. (Delete)");
