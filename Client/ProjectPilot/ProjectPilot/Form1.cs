@@ -65,7 +65,7 @@ namespace ProjectPilot
             button3.BackColor = Color.FromArgb(0, 194, 255);
             button3.Font = new Font("Lucida Sans Unicode", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.White;
-            button3.Location = new Point(214, 536);
+            button3.Location = new Point(152, 530);
             button3.Name = "button3";
             button3.Size = new Size(207, 58);
             button3.TabIndex = 12;
@@ -238,7 +238,17 @@ namespace ProjectPilot
 
         private void button3_Click(object sender, EventArgs e)
         {
+            string username = textBox1.Text;
+            string password = textBox2.Text;
 
+            if (username != "" && password != "")
+            {
+                MessageBox.Show("Success!");
+            } 
+            else
+            {
+                MessageBox.Show("Please fill in both inputs!");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

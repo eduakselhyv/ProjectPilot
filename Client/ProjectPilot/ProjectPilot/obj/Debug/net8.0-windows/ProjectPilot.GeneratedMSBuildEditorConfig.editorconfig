@@ -14,6 +14,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ProjectPilot
-build_property.ProjectDir = C:\Users\TIVIPT23DST\OneDrive - Koulutuskeskus Salpaus\Tehtävät\ProjectPilot\ProjectPilot\ProjectPilot\
+build_property.ProjectDir = C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

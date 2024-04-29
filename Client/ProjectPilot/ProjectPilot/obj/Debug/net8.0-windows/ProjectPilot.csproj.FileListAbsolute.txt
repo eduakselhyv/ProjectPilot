@@ -5,3 +5,21 @@ C:\Users\TIVIPT23DST\OneDrive - Koulutuskeskus Salpaus\Tehtävät\ProjectPilot\P
 C:\Users\TIVIPT23DST\OneDrive - Koulutuskeskus Salpaus\Tehtävät\ProjectPilot\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.AssemblyInfoInputs.cache
 C:\Users\TIVIPT23DST\OneDrive - Koulutuskeskus Salpaus\Tehtävät\ProjectPilot\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.AssemblyInfo.cs
 C:\Users\TIVIPT23DST\OneDrive - Koulutuskeskus Salpaus\Tehtävät\ProjectPilot\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.csproj.CoreCompileInputs.cache
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.Form1.resources
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.Properties.Resources.resources
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.csproj.GenerateResource.cache
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.AssemblyInfoInputs.cache
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.AssemblyInfo.cs
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.csproj.CoreCompileInputs.cache
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.sourcelink.json
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\bin\Debug\net8.0-windows\ProjectPilot.exe
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\bin\Debug\net8.0-windows\ProjectPilot.deps.json
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\bin\Debug\net8.0-windows\ProjectPilot.runtimeconfig.json
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\bin\Debug\net8.0-windows\ProjectPilot.dll
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\bin\Debug\net8.0-windows\ProjectPilot.pdb
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.dll
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\refint\ProjectPilot.dll
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.pdb
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ProjectPilot.genruntimeconfig.cache
+C:\Users\TIVIPT23DST\source\repos\ProjectPilotServer\Client\ProjectPilot\ProjectPilot\obj\Debug\net8.0-windows\ref\ProjectPilot.dll

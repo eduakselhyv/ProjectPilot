@@ -2,10 +2,6 @@
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-        }
 
         private SplitContainer splitContainer1;
         private Label label1;
