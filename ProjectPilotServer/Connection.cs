@@ -12,7 +12,7 @@ namespace ProjectPilotServer
 
         public static string database = "project_pilot";
         public static string user = "root";
-        public static string password = "admin";
+        public static string password = "password";
 
         public static string connStr =
             "server=" + server + ";" +
