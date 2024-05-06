@@ -73,6 +73,7 @@ namespace ProjectPilotServer
                 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(check);
                 DataTable dt = new DataTable();
+                adapter.Fill(dt);
 
                 if (dt.Rows.Count == 0) // if there is no such user with username and password
                 {
