@@ -123,7 +123,6 @@ namespace ProjectPilotServer
                 {
                     // Extract username from query string
                     string requestType = context.Request.Query["requestType"];
-                    var form = await context.Request.ReadFormAsync();
 
                     switch (requestType)
                     {
@@ -132,7 +131,7 @@ namespace ProjectPilotServer
                             break;
 
                         case "relation":
-                            await Relations.DeleteRelation(context, form);
+                            await Relations.DeleteRelation(context);
                             break;
 
                         case "role":

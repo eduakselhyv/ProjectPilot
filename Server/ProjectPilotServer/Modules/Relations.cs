@@ -20,7 +20,7 @@ namespace ProjectPilotServer
 
                 MySqlCommand comm = conn.CreateCommand();
 
-                comm.CommandText = "SELECT requirement_id, requirement_relation_id FROM requirement_relations WHERE requirement_id = @requirement_id";
+                comm.CommandText = "SELECT id, requirement_id, requirement_relation_id FROM requirement_relations WHERE requirement_id = @requirement_id";
 
                 comm.Parameters.AddWithValue("@requirement_id", requirement_id);
 
@@ -80,11 +80,11 @@ namespace ProjectPilotServer
         }
 
         // Deleting a relation
-        public static async Task DeleteRelation(HttpContext context, IFormCollection form)
+        public static async Task DeleteRelation(HttpContext context)
         {
             MySqlConnection conn = new MySqlConnection(Connection.connStr);
 
-            string id = form["id"];
+            string id = context.Request.Query["id"];
 
             try
             {
