@@ -252,13 +252,18 @@ namespace ProjectPilot
         {
             string username = textBox1.Text;
             string password = textBox2.Text;
-            bool success = true;
 
             if (username != "" && password != "")
             {
-                if (success)
+                HttpClient httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.GetAsync("http://localhost:5000?requestType=users");
+                
+                if (response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show("Success!");
+                    string responseData = await response.Content.ReadAsStringAsync();
+
+                    // This is not part of the request
+                    MessageBox.Show(responseData);
                     MainPage mainpage = new MainPage();
                     mainpage.Show();
                     this.Close();
