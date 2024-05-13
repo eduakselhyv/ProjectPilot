@@ -20,5 +20,10 @@ namespace forgotPass2
             recover3.Show();
             this.Close();
         }
+
+        private void Recover2_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
