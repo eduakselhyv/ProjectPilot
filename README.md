@@ -45,7 +45,7 @@ Request body:
 
 ### projects
 
-### POST
+### GET
 URL: ```http://localhost:5000?requestType=projects```<br />
 Response: ```[{"id":1,"name":"test project2","description":"test project description","status":"active"}]```
 > Returns an array of all existing projects in JSON format
@@ -79,7 +79,7 @@ Request body:
 
 ### DELETE
 URL: ```http://localhost:5000?requestType=role```<br />
-Request body:
+Request queries:
 * id - required - Role id
 > Deletes a role. If HTTP status code is 200, then a role was deleted.
 
@@ -87,7 +87,7 @@ Request body:
 
 ### GET
 URL: ```http://localhost:5000?requestType=comments```<br />
-Response: ```[pls insert the response example pls lol thansk]```<br />
+Response: ```[{"id":1,"username":"admin123","value":" new value test","edited":"2024-05-06T07:55:06","created":"2024-05-06T07:52:45","deleted":1},{"id":2,"username":"admin123","value":"new test comment for a project","edited":null,"created":"2024-05-06T07:57:08","deleted":0}]```<br />
 Request queries:
 * type - required - Type of comments to return. Can be "project", "reply" and "requirement"
 * project_id - required if type is "project" - Project id
@@ -96,7 +96,7 @@ Request queries:
 > Returns an array of roles comments according to comment type and queries
 
 ### POST
-URL: ```http://localhost:5000?requestType=comment1```<br />
+URL: ```http://localhost:5000?requestType=comment```<br />
 Request body:
 * type - required - Type of comment to create. Can be "project", "reply" and "requirement"
 * value - required - Comment's value
@@ -108,14 +108,14 @@ Request body:
 > Creates a comment, returns an HTTP status code. 200 is successful
 
 ### PUT
-URL: ```http://localhost:5000?requestType=comment1```<br />
+URL: ```http://localhost:5000?requestType=comment```<br />
 Request body:
 * id - required - Id of a comment to edit
 * value - required - Comment's new value
 > Edits a comment, returns an HTTP status code. 200 is successful
 
 ### DELETE
-URL: ```http://localhost:5000?requestType=comments```<br />
+URL: ```http://localhost:5000?requestType=comment```<br />
 Request queries:
 * id - required - Id of comment to delete
 > Deletes a comment, returns an HTTP status code. 200 is successful,
@@ -124,9 +124,9 @@ Request queries:
 
 ### GET
 URL: ```http://localhost:5000?requestType=requirements```<br />
-Response: ```[pls insert the response example pls lol thansk]```<br />
+Response: ```[{"id":1,"name":"new test name asdasd for requirement 1","status":"active","date":"2024-05-06T08:02:58","deleted":0},{"id":2,"name":"new test requirement 2","status":"active","date":"2024-05-06T08:03:11","deleted":0}]```<br />
 Request queries:
-* project_id_ - required - Project id of a project we need to get requirements for
+* project_id - required - Project id of a project we need to get requirements for
 > Returns an array of requirements
 
 ### POST
@@ -139,23 +139,17 @@ Request body:
 ### PUT
 URL: ```http://localhost:5000?requestType=requirement```<br />
 Request body:
-* type - required - Requirement's type
+* type - required - What to edit in a requirement. It can be "name" or "status"
 * id - required - Id of a requirement to edit
-* name - required - Name of a requirement to edit
-* status - required - Requirement's status
+* name - required if type is "name" - Name of a requirement to edit
+* status - required if type is "status" - Requirement's status
 > Edits a requirement, returns an HTTP status code. 200 is successful
-
-### DELETE
-URL: ```http://localhost:5000?requestType=requirement```<br />
-Request queries:
-* project_id_ - required - Project id of a project we need to get requirements for
-> Creates a requirement, returns an HTTP status code. 200 is successful
 
 ### relations
 
 ### GET
 URL: ```http://localhost:5000?requestType=relations```<br />
-Response: ```[pls insert the response example pls lol thansk]```<br />
+Response: ```[{"id":2,"requirement_id":1,"requirement_relation_id":2}]```<br />
 Request queries:
 * requirement_id - required - Id of a requirement
 > Returns an array of requirements
@@ -170,5 +164,5 @@ Request body:
 ### DELETE
 URL: ```http://localhost:5000?requestType=relation```<br />
 Request queries:
-* project_id - required - Project id of a project we need to get requirements for
+* id - required - Project id of a project we need to get requirements for
 > Deletes a relation, returns an HTTP status code. 200 is successful

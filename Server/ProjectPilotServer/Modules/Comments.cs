@@ -28,7 +28,7 @@ namespace ProjectPilotServer
                 if (type == "project")
                 {
                     comm.CommandText =
-                        "SELECT u.username, c.value, c.edited, c.created " +    // Returning username from users table, and value, edited and created from comments table
+                        "SELECT c.id, u.username, c.value, c.edited, c.created, c.deleted " +    // Returning username from users table, and value, edited and created from comments table
                         "FROM comments c " +                                    // I am basically joining rows from different tables together, based on primary and foreign keys.
                         "JOIN users u ON c.user_id = u.id " +                   // If this makes no sense, I am sorry. There are great tutorials out there tho for this stuff.
                         "WHERE project_id = @project_id";
@@ -44,7 +44,7 @@ namespace ProjectPilotServer
                 else if (type == "reply")
                 {
                     comm.CommandText =
-                        "SELECT u.username, c.value, c.edited, c.created " +
+                        "SELECT c.id, u.username, c.value, c.edited, c.created, c.deleted " +
                         "FROM comments c " +
                         "JOIN users u ON c.user_id = u.id " +
                         "WHERE comment_id = @comment_id";
@@ -60,7 +60,7 @@ namespace ProjectPilotServer
                 else if (type == "requirement")
                 {
                     comm.CommandText =
-                        "SELECT u.username, c.value, c.edited, c.created " +    // Same thing as earlier, but with more joins this time.
+                        "SELECT c.id, u.username, c.value, c.edited, c.created, c.deleted " +    // Same thing as earlier, but with more joins this time.
                         "FROM comments c " +
                         "JOIN requirement_comment_relations rcr ON c.id = rcr.comment_id " +
                         "JOIN users u ON c.user_id = u.id " +

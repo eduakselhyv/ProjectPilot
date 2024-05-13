@@ -21,7 +21,7 @@ namespace ProjectPilotServer
 
                 MySqlCommand comm = conn.CreateCommand();
 
-                comm.CommandText = "SELECT name, status, date FROM requirements WHERE project_id = @project_id";
+                comm.CommandText = "SELECT id, name, status, date, deleted FROM requirements WHERE project_id = @project_id";
 
                 comm.Parameters.AddWithValue("@project_id", project_id);
 
