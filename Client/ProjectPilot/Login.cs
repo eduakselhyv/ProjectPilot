@@ -1,6 +1,7 @@
 using forgotPassword;
 using mainPage1;
 using register;
+using System.Net.Http;
 
 namespace ProjectPilot
 {
@@ -247,17 +248,26 @@ namespace ProjectPilot
             recover1.Show();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        async private void button3_Click(object sender, EventArgs e)
         {
             string username = textBox1.Text;
             string password = textBox2.Text;
 
             if (username != "" && password != "")
             {
-                MessageBox.Show("Success!");
-                MainPage mainpage = new MainPage();
-                mainpage.Show();
-                this.Close();
+                HttpClient httpClient = new HttpClient();
+                HttpResponseMessage response = await httpClient.GetAsync("http://localhost:5000?requestType=users");
+                
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseData = await response.Content.ReadAsStringAsync();
+
+                    // This is not part of the request
+                    MessageBox.Show(responseData);
+                    MainPage mainpage = new MainPage();
+                    mainpage.Show();
+                    this.Close();
+                }
             } 
             else
             {
