@@ -5,6 +5,7 @@ namespace mainPage1
 {
     public partial class MainPage : Form
     {
+
         public MainPage()
         {
             InitializeComponent();
@@ -35,7 +36,10 @@ namespace mainPage1
                     // Add project names to the ListBox
                     foreach (var project in projects)
                     {
-                        listBox1.Items.Add(project["name"].ToString());
+                        if (project["status"].ToString() == "active")
+                        {
+                            listBox1.Items.Add(project["name"].ToString());
+                        }
                     }
                 }
                 else

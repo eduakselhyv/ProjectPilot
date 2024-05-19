@@ -16,10 +16,12 @@ namespace ProjectPilot
 {
     public partial class ProjectInfo : Form
     {
+        private Label desc_label; 
         public ProjectInfo(string projectName)
         {
             InitializeComponent();
             label3.Text = projectName;
+            desc_label = new Label();
         }
 
         private async void ProjectInfo_Load(object sender, EventArgs e)
@@ -43,12 +45,12 @@ namespace ProjectPilot
 
                         if (projectName == label3.Text)
                         {
-                            Label label = new Label();
-                            label.Text = project["description"].ToString();
-                            label.AutoSize = true;
-                            label.TextAlign = ContentAlignment.TopLeft;
-                            label.Padding = new Padding(5);
-                            panel2.Controls.Add(label);
+                            label6.Text = project["id"].ToString();
+                            desc_label.Text = project["description"].ToString();
+                            desc_label.AutoSize = true;
+                            desc_label.TextAlign = ContentAlignment.TopLeft;
+                            desc_label.Padding = new Padding(5);
+                            panel2.Controls.Add(desc_label);
 
                             // Fetch roles for the current project
                             HttpResponseMessage responseRoles = await httpClient.GetAsync($"http://localhost:5000?requestType=roles&project_id={project["id"]}");
@@ -118,16 +120,45 @@ namespace ProjectPilot
             }
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private async void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string option = comboBox1.GetItemText(comboBox1.SelectedItem);
 
             if (option == "Edit")
             {
                 MessageBox.Show("Editing project");
-            } else
+                ProjectEditor projecteditor = new ProjectEditor(label3.Text, desc_label.Text, label6.Text);
+                projecteditor.ShowDialog();
+
+                MainPage mainpage = new MainPage();
+                mainpage.Show();
+                this.Close();
+            }
+            else // Delete project
             {
-                MessageBox.Show("Are you sure you want to delete this project?");
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this project?", "confirmation", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    var formContent2 = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("id", label6.Text),
+                        new KeyValuePair<string, string>("name", label3.Text),
+                        new KeyValuePair<string, string>("description", desc_label.Text),
+                        new KeyValuePair<string, string>("status", "deleted"),
+                    });
+
+                    HttpClient httpClient = new HttpClient();
+                    HttpResponseMessage response = await httpClient.PostAsync("http://localhost:5000?requestType=project", formContent2);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Successfully deleted project!");
+                        MainPage mainpage = new MainPage();
+                        mainpage.Show();
+                        this.Close();
+                    }
+                }
             }
         }
     }
