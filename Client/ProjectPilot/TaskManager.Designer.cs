@@ -1,6 +1,6 @@
 ﻿namespace ProjectPilot
 {
-    partial class ProjectInfo
+    partial class TaskManager
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectInfo));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TaskManager));
             splitContainer1 = new SplitContainer();
             listBox1 = new ListBox();
             textBox1 = new TextBox();
@@ -39,12 +39,11 @@
             button3 = new Button();
             button2 = new Button();
             panel2 = new Panel();
-            label5 = new Label();
-            label4 = new Label();
             label3 = new Label();
             panel1 = new Panel();
             button1 = new Button();
             label2 = new Label();
+            listBox2 = new ListBox();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -146,7 +145,6 @@
             button3.TabIndex = 4;
             button3.Text = "Tasks Manager";
             button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
             // 
             // button2
             // 
@@ -161,34 +159,11 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(label5);
-            panel2.Controls.Add(label4);
+            panel2.Controls.Add(listBox2);
             panel2.Location = new Point(37, 148);
             panel2.Name = "panel2";
             panel2.Size = new Size(633, 385);
             panel2.TabIndex = 2;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.BackColor = Color.Transparent;
-            label5.Font = new Font("Segoe UI", 10F);
-            label5.Location = new Point(14, 346);
-            label5.Name = "label5";
-            label5.Size = new Size(91, 19);
-            label5.TabIndex = 6;
-            label5.Text = "project_name";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.BackColor = Color.Transparent;
-            label4.Font = new Font("Segoe UI", 15F);
-            label4.Location = new Point(12, 317);
-            label4.Name = "label4";
-            label4.Size = new Size(117, 28);
-            label4.TabIndex = 6;
-            label4.Text = "Participants:";
             // 
             // label3
             // 
@@ -234,16 +209,25 @@
             label2.TabIndex = 4;
             label2.Text = "ProjectPilot";
             // 
-            // ProjectInfo
+            // listBox2
+            // 
+            listBox2.FormattingEnabled = true;
+            listBox2.ItemHeight = 15;
+            listBox2.Location = new Point(3, 6);
+            listBox2.Name = "listBox2";
+            listBox2.Size = new Size(617, 364);
+            listBox2.TabIndex = 0;
+            // 
+            // TaskManager
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1315, 705);
             Controls.Add(splitContainer1);
             Controls.Add(panel1);
-            Name = "ProjectInfo";
+            Name = "TaskManager";
             Text = "Form1";
-            Load += ProjectInfo_Load;
+            Load += TaskManager_Load;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel1.PerformLayout();
             splitContainer1.Panel2.ResumeLayout(false);
@@ -251,7 +235,6 @@
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -271,9 +254,8 @@
         private Button button3;
         private Button button2;
         private Button button4;
-        private Label label4;
-        private Label label5;
         private ComboBox comboBox1;
         private Label label6;
+        private ListBox listBox2;
     }
 }

@@ -14,17 +14,17 @@ using Label = System.Windows.Forms.Label;
 
 namespace ProjectPilot
 {
-    public partial class ProjectInfo : Form
+    public partial class TaskManager : Form
     {
         private Label desc_label;
-        public ProjectInfo(string projectName)
+        public TaskManager(string projectName)
         {
             InitializeComponent();
             label3.Text = projectName;
             desc_label = new Label();
         }
 
-        private async void ProjectInfo_Load(object sender, EventArgs e)
+        private async void TaskManager_Load(object sender, EventArgs e)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace ProjectPilot
 
                     foreach (var project in projects)
                     {
-                        if (project["status"].ToString() != "active") continue; // only display active projects
+                        if (project["status"].ToString() != "active") continue;
                         string projectName = project["name"].ToString();
                         listBox1.Items.Add(projectName);
 
@@ -82,9 +82,6 @@ namespace ProjectPilot
                                             }
                                         }
                                     }
-
-                                    // Set the text of label7 to the concatenated string of related users
-                                    label5.Text = string.Join(", ", relatedUsers);
                                 }
                             }
                         }
@@ -163,16 +160,11 @@ namespace ProjectPilot
             }
         }
 
-        private void button2_Click(object sender, EventArgs e) // info tab button
+        private void button2_Click(object sender, EventArgs e) // switch to project info tab
         {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e) // tasks manager button
-        {
-            MessageBox.Show("Switching to task manager!");
-            TaskManager taskmanager = new TaskManager(label3.Text); // label3.Text is project name
-            taskmanager.Show();
+            MessageBox.Show("Switching to project info!");
+            ProjectInfo projectinfo = new ProjectInfo(label3.Text); // label3.Text is project name
+            projectinfo.Show();
             this.Close();
         }
     }
