@@ -111,7 +111,7 @@ namespace ProjectPilot
             label6.Font = new Font("Lucida Sans Unicode", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.Location = new Point(53, 439);
             label6.Name = "label6";
-            label6.Size = new Size(177, 18);
+            label6.Size = new Size(139, 16);
             label6.TabIndex = 9;
             label6.Text = "Don't have an account?";
             // 
@@ -120,7 +120,7 @@ namespace ProjectPilot
             textBox2.Font = new Font("Segoe UI", 10F);
             textBox2.Location = new Point(53, 402);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(417, 30);
+            textBox2.Size = new Size(417, 25);
             textBox2.TabIndex = 7;
             // 
             // label4
@@ -129,7 +129,7 @@ namespace ProjectPilot
             label4.Font = new Font("Lucida Console", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(53, 376);
             label4.Name = "label4";
-            label4.Size = new Size(162, 25);
+            label4.Size = new Size(129, 20);
             label4.TabIndex = 6;
             label4.Text = "Password: ";
             // 
@@ -139,7 +139,7 @@ namespace ProjectPilot
             label3.Font = new Font("Lucida Console", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(53, 263);
             label3.Name = "label3";
-            label3.Size = new Size(162, 25);
+            label3.Size = new Size(129, 20);
             label3.TabIndex = 5;
             label3.Text = "Username: ";
             label3.Click += label3_Click;
@@ -149,7 +149,7 @@ namespace ProjectPilot
             textBox1.Font = new Font("Segoe UI", 10F);
             textBox1.Location = new Point(53, 291);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(417, 30);
+            textBox1.Size = new Size(417, 25);
             textBox1.TabIndex = 3;
             // 
             // label1
@@ -158,7 +158,7 @@ namespace ProjectPilot
             label1.Font = new Font("Lucida Sans Unicode", 40.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(40, 40);
             label1.Name = "label1";
-            label1.Size = new Size(397, 81);
+            label1.Size = new Size(322, 65);
             label1.TabIndex = 0;
             label1.Text = "ProjectPilot";
             label1.Click += label1_Click;
@@ -170,7 +170,7 @@ namespace ProjectPilot
             label2.Font = new Font("Lucida Sans Unicode", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.Location = new Point(53, 129);
             label2.Name = "label2";
-            label2.Size = new Size(318, 28);
+            label2.Size = new Size(270, 23);
             label2.TabIndex = 2;
             label2.Text = "Project handling made easy";
             label2.Click += label2_Click;
