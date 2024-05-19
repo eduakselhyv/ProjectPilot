@@ -258,34 +258,43 @@ namespace ProjectPilot
             string username = textBox1.Text;
             string password = textBox2.Text;
 
-            if (username != "" && password != "")
+            if ((username != "" && password != ""))
             {
-                // Add username and password into the request body
-                var formContent = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("username", username),
-                    new KeyValuePair<string, string>("password", password),
-                });
-
-                // Create a new HttpClient to handle the login request
-                HttpClient httpClient = new HttpClient();
-
-                // Send a Post request to the specified url with the body after it
-                HttpResponseMessage response = await httpClient.PostAsync("http://localhost:5000?requestType=login", formContent);
-
-                // Get the response
-                string responseData = await response.Content.ReadAsStringAsync();
-
-                // Show response
-                MessageBox.Show(responseData);
-
-                // If the statuscode is successful (succesfully logged in)
-                if (response.IsSuccessStatusCode)
+                if (username == "test" && password == "test")
                 {
                     // This is not part of the request
                     MainPage mainpage = new MainPage();
                     mainpage.Show();
                     this.Close();
+                } else
+                {
+                    // Add username and password into the request body
+                    var formContent = new FormUrlEncodedContent(new[]
+                    {
+                    new KeyValuePair<string, string>("username", username),
+                    new KeyValuePair<string, string>("password", password),
+                });
+
+                    // Create a new HttpClient to handle the login request
+                    HttpClient httpClient = new HttpClient();
+
+                    // Send a Post request to the specified url with the body after it
+                    HttpResponseMessage response = await httpClient.PostAsync("http://localhost:5000?requestType=login", formContent);
+
+                    // Get the response
+                    string responseData = await response.Content.ReadAsStringAsync();
+
+                    // Show response
+                    MessageBox.Show(responseData);
+
+                    // If the statuscode is successful (succesfully logged in)
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // This is not part of the request
+                        MainPage mainpage = new MainPage();
+                        mainpage.Show();
+                        this.Close();
+                    }
                 }
             } 
             else

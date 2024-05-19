@@ -75,15 +75,27 @@ namespace ProjectPilotServer
                 {
                     MySqlCommand comm = conn.CreateCommand();
 
-                    comm.CommandText = "INSERT INTO projects (name, description, status) VALUES (@name, @description, 'active')";
+                    comm.CommandText = "INSERT INTO projects (name, description, status) VALUES (@name, @description, 'active'); SELECT LAST_INSERT_ID();";
 
                     comm.Parameters.AddWithValue("@name", name);
                     comm.Parameters.AddWithValue("@description", description);
 
-                    comm.ExecuteNonQuery();
+                    // Execute the query to insert the new project
+                    object result = comm.ExecuteScalar();
 
-                    context.Response.StatusCode = 200;
-                    await context.Response.WriteAsync("Successfully created a project");
+                    // Check if the result is not null and convert it to the last inserted ID
+                    if (result != null)
+                    {
+                        int lastInsertedId = Convert.ToInt32(result);
+
+                        context.Response.StatusCode = 200;
+                        await context.Response.WriteAsync($"{lastInsertedId}");
+                    }
+                    else
+                    {
+                        context.Response.StatusCode = 500;
+                        await context.Response.WriteAsync("Failed to retrieve last inserted ID");
+                    }
                 }
             }
             catch (Exception ex)

@@ -74,15 +74,15 @@
             // 
             splitContainer1.Panel2.BackColor = Color.FromArgb(231, 231, 231);
             splitContainer1.Panel2.Controls.Add(pictureBox1);
-            splitContainer1.Size = new Size(1175, 512);
-            splitContainer1.SplitterDistance = 580;
+            splitContainer1.Size = new Size(1315, 705);
+            splitContainer1.SplitterDistance = 649;
             splitContainer1.TabIndex = 0;
             // 
             // checkBox2
             // 
             checkBox2.AutoSize = true;
             checkBox2.Font = new Font("Segoe UI", 10F);
-            checkBox2.Location = new Point(60, 352);
+            checkBox2.Location = new Point(62, 470);
             checkBox2.Margin = new Padding(3, 2, 3, 2);
             checkBox2.Name = "checkBox2";
             checkBox2.Size = new Size(326, 23);
@@ -94,7 +94,7 @@
             // 
             checkBox1.AutoSize = true;
             checkBox1.Font = new Font("Segoe UI", 10F);
-            checkBox1.Location = new Point(60, 327);
+            checkBox1.Location = new Point(62, 445);
             checkBox1.Margin = new Padding(3, 2, 3, 2);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(315, 23);
@@ -105,17 +105,17 @@
             // textBox3
             // 
             textBox3.Font = new Font("Segoe UI", 10F);
-            textBox3.Location = new Point(60, 279);
+            textBox3.Location = new Point(62, 397);
             textBox3.Margin = new Padding(3, 2, 3, 2);
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(365, 25);
+            textBox3.Size = new Size(448, 25);
             textBox3.TabIndex = 22;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Lucida Console", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(60, 258);
+            label5.Location = new Point(62, 376);
             label5.Name = "label5";
             label5.Size = new Size(93, 20);
             label5.TabIndex = 21;
@@ -126,12 +126,12 @@
             button3.BackColor = Color.FromArgb(0, 194, 255);
             button3.Font = new Font("Lucida Sans Unicode", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.White;
-            button3.Location = new Point(188, 407);
+            button3.Location = new Point(207, 548);
             button3.Margin = new Padding(3, 2, 3, 2);
             button3.Name = "button3";
             button3.Size = new Size(181, 44);
             button3.TabIndex = 20;
-            button3.Text = "Create one";
+            button3.Text = "Create Account";
             button3.UseMnemonic = false;
             button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
@@ -139,17 +139,17 @@
             // textBox2
             // 
             textBox2.Font = new Font("Segoe UI", 10F);
-            textBox2.Location = new Point(60, 212);
+            textBox2.Location = new Point(62, 330);
             textBox2.Margin = new Padding(3, 2, 3, 2);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(365, 25);
+            textBox2.Size = new Size(448, 25);
             textBox2.TabIndex = 16;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Lucida Console", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(60, 190);
+            label4.Location = new Point(62, 308);
             label4.Name = "label4";
             label4.Size = new Size(129, 20);
             label4.TabIndex = 15;
@@ -159,7 +159,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Lucida Console", 15F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(60, 132);
+            label3.Location = new Point(62, 250);
             label3.Name = "label3";
             label3.Size = new Size(129, 20);
             label3.TabIndex = 14;
@@ -168,18 +168,19 @@
             // textBox1
             // 
             textBox1.Font = new Font("Segoe UI", 10F);
-            textBox1.Location = new Point(60, 153);
+            textBox1.Location = new Point(62, 271);
             textBox1.Margin = new Padding(3, 2, 3, 2);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(365, 25);
+            textBox1.Size = new Size(448, 25);
             textBox1.TabIndex = 13;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.BackColor = Color.Transparent;
             label2.Font = new Font("Lucida Sans Unicode", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(34, 80);
+            label2.Location = new Point(53, 129);
             label2.Name = "label2";
             label2.Size = new Size(270, 23);
             label2.TabIndex = 3;
@@ -189,7 +190,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Lucida Sans Unicode", 40.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(22, 19);
+            label1.Location = new Point(40, 40);
             label1.Name = "label1";
             label1.Size = new Size(322, 65);
             label1.TabIndex = 1;
@@ -198,10 +199,10 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(102, 65);
+            pictureBox1.Location = new Point(103, 101);
             pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(409, 365);
+            pictureBox1.Size = new Size(471, 503);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
@@ -209,7 +210,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1175, 512);
+            ClientSize = new Size(1315, 705);
             Controls.Add(splitContainer1);
             Margin = new Padding(3, 2, 3, 2);
             Name = "Register";
