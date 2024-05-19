@@ -42,9 +42,10 @@
             panel1.BackColor = Color.White;
             panel1.Controls.Add(label1);
             panel1.Controls.Add(button1);
-            panel1.Location = new Point(330, 188);
+            panel1.Location = new Point(289, 141);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(633, 383);
+            panel1.Size = new Size(554, 287);
             panel1.TabIndex = 0;
             panel1.Paint += panel1_Paint;
             // 
@@ -52,9 +53,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 20F);
-            label1.Location = new Point(142, 81);
+            label1.Location = new Point(124, 61);
             label1.Name = "label1";
-            label1.Size = new Size(335, 92);
+            label1.Size = new Size(265, 74);
             label1.TabIndex = 8;
             label1.Text = "Successfully changed\r\npassword!";
             // 
@@ -63,9 +64,10 @@
             button1.BackColor = Color.FromArgb(0, 194, 255);
             button1.Font = new Font("Segoe UI", 12F);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(154, 269);
+            button1.Location = new Point(135, 202);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Size = new Size(309, 62);
+            button1.Size = new Size(270, 46);
             button1.TabIndex = 7;
             button1.Text = "LOGIN";
             button1.UseVisualStyleBackColor = false;
@@ -75,9 +77,10 @@
             // 
             panel2.BackColor = Color.White;
             panel2.Controls.Add(label2);
-            panel2.Location = new Point(-8, 0);
+            panel2.Location = new Point(-7, 0);
+            panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1377, 86);
+            panel2.Size = new Size(1205, 64);
             panel2.TabIndex = 1;
             // 
             // label2
@@ -86,20 +89,21 @@
             label2.BackColor = Color.Transparent;
             label2.Font = new Font("Lucida Sans Unicode", 28.2F);
             label2.ForeColor = Color.Black;
-            label2.Location = new Point(20, 9);
+            label2.Location = new Point(18, 7);
             label2.Name = "label2";
-            label2.Size = new Size(282, 57);
+            label2.Size = new Size(226, 45);
             label2.TabIndex = 3;
             label2.Text = "ProjectPilot";
             // 
             // Recover3
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(231, 231, 231);
-            ClientSize = new Size(1361, 698);
+            ClientSize = new Size(1191, 524);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Recover3";
             Text = "Form1";
             panel1.ResumeLayout(false);
