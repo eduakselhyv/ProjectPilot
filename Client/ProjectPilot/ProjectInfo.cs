@@ -109,11 +109,25 @@ namespace ProjectPilot
                 ProjectInfo projectinfo = new ProjectInfo(project);
                 projectinfo.Show();
                 this.Close();
-            } else
+            }
+            else
             {
                 MainPage mainpage = new MainPage();
                 mainpage.Show();
                 this.Close();
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string option = comboBox1.GetItemText(comboBox1.SelectedItem);
+
+            if (option == "Edit")
+            {
+                MessageBox.Show("Editing project");
+            } else
+            {
+                MessageBox.Show("Are you sure you want to delete this project?");
             }
         }
     }
